@@ -1,0 +1,14 @@
+[package]
+name = "rst_jsonx"
+version = "0.1.0"
+edition = "2021"
+description = "fast JSON pretty-printer and minimizer."
+homepage = "https://github.com/4sskick/jsonx"
+repository = "https://github.com/4sskick/jsonx"
+keywords = ["json", "pretty-print", "pretty", "minimize"]
+categories = ["encoding", "rendering", "text-processing", "value-formatting"]
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
