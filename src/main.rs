@@ -8,7 +8,7 @@ use getopts::{Matches, Options};
 fn main() {
     match do_run() {
         Ok(_) => {
-            println!("ok!!")
+            
         }
         Err(e) => {
             eprintln!("{}", e);
@@ -18,14 +18,18 @@ fn main() {
 }
 
 fn do_run() -> Result<(), String> {
+    //if execute "jsonx -h"
+    //output: ["jsonx", "-h"]
     let args: Vec<String> = std::env::args().collect();
 
     //build option flag command
     let mut opts = Options::new();
 
     opts.optflag("h", "help", "Help you how to use this tool");
+    opts.optflag("m", "minimize", "Minimize file type json into one liner");
 
     //parse user input on type
+    //args[1..] => ["-h"]
     let flagArgs: Matches = match opts.parse(&args[1..]) {
         Ok(m) => m,
         Err(e) => {
@@ -33,6 +37,8 @@ fn do_run() -> Result<(), String> {
         }
     };
 
+    //when has flag "-h"
+    //then print help and exit
     if flagArgs.opt_present("h"){
         let program = args[0].clone();
         do_print_help(&program, &opts);
@@ -54,10 +60,14 @@ fn do_run() -> Result<(), String> {
 }
 
 fn do_print_help(program_name: &str, opts: &Options){
-    let desc = "description";
+    let desc = "Jsonx is a JSON transformer. Provide pretty-printing and minimizing of JSON-encode UTF-8 data.";
 
-    println!("this should be help document for usage {}",program_name);
+    let example_usage = "
+    Minimize file into one liner:
+        jsonx -m <file_name_input.json> file_name_out.json
+    ";
 
     let brief = format!("Usage: {} [options]\n\n{}", program_name, desc);
     print!("{}", opts.usage(&brief));
+    println!("{}", example_usage);
 }

@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'rst_jsonx'",
+            "name": "Debug executable 'jsonx'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=rst_jsonx",
-                    "--package=rst_jsonx"
+                    "--bin=jsonx",
+                    "--package=jsonx"
                 ],
                 "filter": {
-                    "name": "rst_jsonx",
+                    "name": "jsonx",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'rst_jsonx'",
+            "name": "Debug unit tests in executable 'jsonx'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=rst_jsonx",
-                    "--package=rst_jsonx"
+                    "--bin=jsonx",
+                    "--package=jsonx"
                 ],
                 "filter": {
-                    "name": "rst_jsonx",
+                    "name": "jsonx",
                     "kind": "bin"
                 }
             },
