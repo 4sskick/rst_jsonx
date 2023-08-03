@@ -1,15 +1,11 @@
-use std::{
-    io::{Error, ErrorKind},
-    result,
-};
+use std::io::{Error, ErrorKind};
 
+mod jsonx;
 use getopts::{Matches, Options};
 
 fn main() {
     match do_run() {
-        Ok(_) => {
-            
-        }
+        Ok(_) => {}
         Err(e) => {
             eprintln!("{}", e);
             std::process::exit(99);
@@ -39,18 +35,31 @@ fn do_run() -> Result<(), String> {
 
     //when has flag "-h"
     //then print help and exit
-    if flagArgs.opt_present("h"){
+    if flagArgs.opt_present("h") {
         let program = args[0].clone();
         do_print_help(&program, &opts);
         return Ok(());
     }
 
-    let result: Result<(), std::io::Error> = Err(std::io::Error::new(
-        ErrorKind::BrokenPipe,
-        "Dummy error broken pipe",
-    ));
+    //read file i/o
+    let mut input: Box<dyn std::io::Read> = Box::new(std::io::stdin());
+    let mut output: Box<dyn std::io::Write> = Box::new(std::io::stdout());
 
-        // let result:Result<(), std::io::Error> = 
+    // let result: Result<(), std::io::Error> = Err(std::io::Error::new(
+    //     ErrorKind::BrokenPipe,
+    //     "Dummy error broken pipe",
+    // ));
+
+    let result = if flagArgs.opt_present("m") {
+        let mut fm = jsonx::Formatter::minimizer();
+        fm.do_format(&mut input, &mut output);
+        Ok(())
+    } else {
+        Err(std::io::Error::new(
+            ErrorKind::BrokenPipe,
+            "Dummy rror broken pipe",
+        ))
+    };
 
     match result {
         Err(e) if e.kind() == ErrorKind::BrokenPipe => Err(e.to_string()),
@@ -59,7 +68,7 @@ fn do_run() -> Result<(), String> {
     }
 }
 
-fn do_print_help(program_name: &str, opts: &Options){
+fn do_print_help(program_name: &str, opts: &Options) {
     let desc = "Jsonx is a JSON transformer. Provide pretty-printing and minimizing of JSON-encode UTF-8 data.";
 
     let example_usage = "
